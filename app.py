@@ -1,10 +1,10 @@
 import streamlit as st
 
-# 🚨 会社のGoogleドメイン以外を弾くセキュリティコード
-if not st.experimental_user.get("is_logged_in", False):
-    user_email = st.experimental_user.get("email", "")
+# 🚨 【セキュリティ】指定ドメイン以外を完全にシャットアウトする（最新版）
+if not st.user.is_logged_in:
+    user_email = st.user.get("email", "")
     if not user_email.endswith("@" + st.secrets["auth"]["domain"]):
-        st.error("アクセス権限がありません。会社のGoogleアカウントでサインインしてください。")
+        st.error("アクセス権限がありません。対象のGoogleアカウントでサインインしてください。")
         st.stop()
 
 import streamlit as st
