@@ -1,5 +1,14 @@
 import streamlit as st
 
+# 🚨 会社のGoogleドメイン以外を弾くセキュリティコード
+if not st.experimental_user.get("is_logged_in", False):
+    user_email = st.experimental_user.get("email", "")
+    if not user_email.endswith("@" + st.secrets["auth"]["domain"]):
+        st.error("アクセス権限がありません。会社のGoogleアカウントでサインインしてください。")
+        st.stop()
+
+import streamlit as st
+
 # アプリのタイトル（画面最上部に固定）
 st.title("武田塾 問い合わせ対応ナビゲーター")
 st.caption("試作11号：面談希望ルート（架電特化版）")
