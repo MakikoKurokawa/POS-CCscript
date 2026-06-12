@@ -1,10 +1,17 @@
 import streamlit as st
 
-# 🚨 【セキュリティ】指定ドメイン以外を完全にシャットアウトする（最新版）
+# 🚨 【完全版】Googleログインを強制し、指定ドメイン以外をシャットアウトする
 if not st.user.is_logged_in:
+    # ログインしていない場合、Googleログインボタンだけを画面に強制表示
+    st.write("### 🔒 社内専用セキュリティチェック")
+    st.write("このアプリにアクセスするには、武田塾のGoogleアカウントでサインインしてください。")
+    st.login_button("Googleアカウントでサインイン")
+    st.stop()
+else:
+    # ログインしている場合、ドメインをチェック
     user_email = st.user.get("email", "")
     if not user_email.endswith("@" + st.secrets["auth"]["domain"]):
-        st.error("アクセス権限がありません。対象のGoogleアカウントでサインインしてください。")
+        st.error("アクセス権限がありません。正しい組織のアカウントでサインインし直してください。")
         st.stop()
 
 import streamlit as st
